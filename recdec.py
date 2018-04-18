@@ -28,7 +28,6 @@ def digit():
     return
 
 def expr():
-    print "Expression"
     if words[0] == "+" or words[0] == "*":
         print words[0]
         words.pop(0)
@@ -52,7 +51,6 @@ def assign():
     return
 
 def testexpr():
-    print "Test expression"
     variable()
     if words[0] == "<=":
         print words[0]
@@ -91,7 +89,6 @@ def ifstmt():
     return
 
 def morestmts():
-    print "more statements"
     if words[0] == ";":
         words.pop(0)
         stmtlist()
@@ -100,7 +97,6 @@ def morestmts():
     return
 
 def stmt():
-    print "Statement"
     if words[0] == "if":
         ifstmt()
     elif words[0] == "while":
@@ -112,7 +108,6 @@ def stmt():
     return
 
 def stmtlist():
-    print "Statement List"
     stmt()
     morestmts()
     return
