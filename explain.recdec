@@ -1,0 +1,8 @@
+Language: Python
+
+Location of code: /home/s18/lq712
+
+Build: python recdec.py < file
+
+https://github.com/LadyKent27/RecursiveDescendingParser
+
