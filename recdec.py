@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
 
 def variable():
-    newstr = ""
-    if len(words[0]) == 2:
-        newstr = words[0][-1:]
-        if newstr == ";":
-            print newstr
-            words[0] = words[0][1:]
-        else:
-            print "Invalid variable supplied"
-    if len(words[0]) == 1:
-        if words[0] == "a" or words[0] == "b" or words[0] == "c":
-            print words[0]
-            words.pop(0)
-            if newstr == ";":
-                words.insert(0, newstr)
+    if words[0] == "a" or words[0] == "b" or words[0] == "c":
+        print words[0]
+        variables.append(words[0])
+        words.pop(0)
     else:
         print "Invalid variable supplied"
+        exit()
     return
 
 def digit():
@@ -25,6 +16,7 @@ def digit():
         words.pop(0)
     else:
         print "Invalid digit supplied"
+        exit()
     return
 
 def expr():
@@ -44,9 +36,11 @@ def assign():
     variable()
     if words[0] == "=":
         print words[0]
+        assignments.append(words[0])
         words.pop(0)
     else:
         print "Missing or invalid assignment operator"
+        exit()
     expr()
     return
 
@@ -58,6 +52,7 @@ def testexpr():
         expr()
     else:
         print "Invalid test expression"
+        exit()
     return
 
 def whilestmt():
@@ -70,6 +65,7 @@ def whilestmt():
         stmt()
     else:
         print "Missing do action"
+        exit()
     return
 
 def ifstmt():
@@ -86,14 +82,13 @@ def ifstmt():
             stmt()
     else:
         print "Missing if condition"
+        exit()
     return
 
 def morestmts():
     if words[0] == ";":
         words.pop(0)
         stmtlist()
-    else:
-        "Invalid operator"
     return
 
 def stmt():
@@ -113,26 +108,19 @@ def stmtlist():
     return
 
 def block():
-    newstr = ""
     if words[0] == "begin":
         print words[0]
         words.pop(0)
         stmtlist()
-        if len(words[0]) == 4:
-            newstr = words[0][-1:]
-            if newstr == "." or newstr == ";":
-                words[0] = words[0][:3]
-            else:
-                print "Invalid variable supplied"
         if words[0] == "end":
             print words[0]
             words.pop(0)
-            if newstr == "." or newstr == ";":
-                words.insert(0, newstr)
         else:
             print "Missing end statement for block"
+            exit()
     else:
         print "Invalid program."
+        exit()
     return
 
 def program():
@@ -140,15 +128,29 @@ def program():
         print words[0]
         words.pop(0)
         block()
-        if words[0] == ".":
-            print "Program valid"
-    else:
-        print "Invalid program."
+        if words[0] != ".":
+            print "Invalid program."
+            exit()
     return
 
+# Read in file input
 import sys
 
 data = sys.stdin.read()
 words = data.split()
+for index, word in enumerate(words):
+    if len(word) > 1:
+        if word[-1:] == ";" or word[-1:] == ".":
+            words[index] = word[:-1]
+            words.insert(index + 1, word[-1:])
+
+# Handle tracking assignments and variables
+assignments = []
+variables = []
+
+# Parse
 program()
+
+# Print output
+print str(len(assignments)) + " assignments, " + str(len(variables)) + " variable references."
 
